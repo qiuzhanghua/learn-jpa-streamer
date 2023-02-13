@@ -25,9 +25,4 @@ public class App {
             System.out.println(count);
         };
     }
-
-    @Bean(destroyMethod = "close")
-    JPAStreamer jpaStreamer() {
-        return JPAStreamer.of("app");
-    }
 }

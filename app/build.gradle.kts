@@ -16,8 +16,10 @@ val mysqlVersion: String by project
 dependencies {
     implementation("com.google.guava:guava:31.1-jre")
     implementation("org.springframework.boot:spring-boot-starter")
-    implementation("org.hibernate:hibernate-entitymanager:$hibernateVersion")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+//    implementation("org.hibernate:hibernate-entitymanager:$hibernateVersion")
     implementation("com.speedment.jpastreamer:jpastreamer-core:$jpaStreamerVersion")
+    implementation("com.speedment.jpastreamer.integration.spring:spring-boot-jpastreamer-autoconfigure:$jpaStreamerVersion")
     annotationProcessor("com.speedment.jpastreamer:fieldgenerator-standard:$jpaStreamerVersion")
     implementation("com.mysql:mysql-connector-j:$mysqlVersion")
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")

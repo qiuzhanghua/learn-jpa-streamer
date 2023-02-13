@@ -4,6 +4,7 @@
 package com.example;
 
 import com.example.domain.Film;
+import com.example.domain.Film$;
 import com.speedment.jpastreamer.application.JPAStreamer;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,6 +21,7 @@ public class App {
     CommandLineRunner commandLineRunner(final JPAStreamer jpaStreamer) {
         return args -> {
             jpaStreamer.stream(Film.class)
+                    .filter(Film$.title.startsWith("A"))
                     .forEach(System.out::println);
             long count = jpaStreamer.stream(Film.class).count();
             System.out.println(count);

@@ -5,17 +5,29 @@ package com.example;
 
 import com.example.domain.Film;
 import com.speedment.jpastreamer.application.JPAStreamer;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
+@SpringBootApplication
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
+    public static void main(String[] args) {
+        SpringApplication.run(App.class);
     }
 
-    public static void main(String[] args) {
-        JPAStreamer jpaStreamer = JPAStreamer.of("app");
+    @Bean
+    CommandLineRunner commandLineRunner(final JPAStreamer jpaStreamer) {
+        return args -> {
+            jpaStreamer.stream(Film.class)
+                    .forEach(System.out::println);
+            long count = jpaStreamer.stream(Film.class).count();
+            System.out.println(count);
+        };
+    }
 
-        jpaStreamer.stream(Film.class)
-                .forEach(System.out::println);
-        jpaStreamer.close();
+    @Bean(destroyMethod = "close")
+    JPAStreamer jpaStreamer() {
+        return JPAStreamer.of("app");
     }
 }

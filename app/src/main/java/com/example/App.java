@@ -11,6 +11,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @SpringBootApplication
 public class App {
     public static void main(String[] args) {
@@ -20,11 +23,11 @@ public class App {
     @Bean
     CommandLineRunner commandLineRunner(final JPAStreamer jpaStreamer) {
         return args -> {
-            jpaStreamer.stream(Film.class)
+            List<String> list = jpaStreamer.stream(Film.class)
                     .filter(Film$.title.startsWith("A"))
-                    .forEach(System.out::println);
-            long count = jpaStreamer.stream(Film.class).count();
-            System.out.println(count);
+                    .map(Film::getTitle)  // Not affect SQL, ouch!
+                    .collect(Collectors.toList());
+            System.out.println(list);
         };
     }
 }
